@@ -10,9 +10,9 @@ class LocationTest extends TestCase
     public function test_location_obj(): void
     {
         $location = new Location(
+            $country = 'United States',
             $city = 'Mountain View',
             $region = 'California',
-            $country = 'United States'
         );
         
         $this->assertEquals($location->city, $city);
