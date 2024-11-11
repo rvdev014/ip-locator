@@ -1,19 +1,20 @@
 <?php
 
-namespace App\IpLocator\Models;
+namespace App\IpLocator\Services;
 
 use Exception;
+use RuntimeException;
 
 class HttpClient
 {
     /** @throws Exception */
-    public function get($url): array
+    public function get($url): string
     {
         $response = @file_get_contents($url);
         if ($response === false) {
-            throw new Exception("Could not connect to $url");
+            throw new RuntimeException(error_get_last()['message'] ?? 'Unknown error');
         }
         
-        return json_decode($response, true);
+        return $response;
     }
 }

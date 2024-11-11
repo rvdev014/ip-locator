@@ -2,8 +2,8 @@
 
 namespace App\IpLocator\Interfaces;
 
-use App\IpLocator\Models\Ip;
-use App\IpLocator\Models\Location;
+use App\IpLocator\Models\Entities\Ip;
+use App\IpLocator\Models\Entities\Location;
 
 interface Locator
 {

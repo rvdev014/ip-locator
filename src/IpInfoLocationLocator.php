@@ -8,7 +8,7 @@ use App\IpLocator\Interfaces\Locator;
 use App\IpLocator\Services\HttpClient;
 use App\IpLocator\Models\Entities\Location;
 
-class IpGeoLocationLocator implements Locator
+class IpInfoLocationLocator implements Locator
 {
     public function __construct(
         protected HttpClient $httpClient,
@@ -18,22 +18,19 @@ class IpGeoLocationLocator implements Locator
     /** @throws Exception */
     public function locate(Ip $ip): ?Location
     {
-        $url = 'https://api.ipgeolocation.io/ipgeo?' . http_build_query([
-                'apiKey' => $this->apiKey,
-                'ip' => $ip->value
-            ]);
+        $url = "https://ipinfo.io/$ip->value?token=$this->apiKey";
         
         $response = $this->httpClient->get($url);
         $data = json_decode($response, true);
         
-        if (empty($data['country_name'])) {
+        if (empty($data['country'])) {
             return null;
         }
         
         return new Location(
-            country: $data['country_name'],
+            country: $data['country'],
             city: $data['city'],
-            region: $data['state_prov']
+            region: $data['region']
         );
     }
 }
